@@ -14,7 +14,7 @@ def load_all_data(path):
     label_path = path.replace(replay_name + "/", '')
 
     data = np.load(data_path + replay_name + ".rep.channels_compressed.npz" )["data"]
-    label = label_path + replay_name + '/' + "vpds_label_masked.npy"
+    label = label_path + replay_name + '/' + "0_vpds_label_masked.npy"
     if os.path.exists(label):
         # os.mkdir("./data/" + replay_name)
 

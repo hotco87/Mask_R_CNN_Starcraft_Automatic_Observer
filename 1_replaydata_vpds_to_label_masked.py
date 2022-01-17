@@ -129,4 +129,4 @@ for i in pth:
             vpds, num_dataset = get_players_vpds(path + i +'/')
             vpds_tile = (vpds / TILE_SIZE).astype(int)
             channel_vpds = mapping_vpd_into_channel(vpds_tile, num_dataset=1)
-            np.save(path + i +'/' + "vpds_label_masked.npy", channel_vpds)
+            np.save(path + i +'/' + "0_vpds_label_masked.npy", channel_vpds)

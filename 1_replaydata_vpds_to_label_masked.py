@@ -96,31 +96,7 @@ def vpds_tile_into_channel_kernel_sum(channel_vpds):
     return np.asarray(res_kernel_sum), np.asarray(max_vp_coord)
 
 
-def find_unique_peaks(peaks, threshhold):
-    tmp = peaks.reshape(peaks.shape[0], 1, peaks.shape[1])
-    distance_each = np.sqrt(np.einsum('ijk, ijk->ij', peaks - tmp, peaks - tmp))
-
-    tf_mat = distance_each > threshold
-    tf_mat_except_diagonal = tf_mat[~np.eye(tf_mat.shape[0], dtype=bool)].reshape(tf_mat.shape[0], -1)
-
-    all_true = np.bitwise_and.reduce(tf_mat_except_diagonal, axis=1)
-    ## 다른 걸로부터 독립적인 것들
-    isolated = np.where(all_true)
-    ## 서로 독립적이지 않은 것들
-    not_isolated = np.where(~all_true)
-
-    ## 서로 독립적이지 않은 것들중 Unique한 것을 찾음
-    not_isolated_result = []
-    not_isolated_unique = np.unique(tf_mat_except_diagonal[~all_true], axis=0)
-    for idx in range(not_isolated_unique.shape[0]):
-        niche = np.asarray([(tf_mat_except_diagonal[tf_idx] == not_isolated_unique[idx]).all() for tf_idx in
-                            range(tf_mat_except_diagonal.shape[0])])
-        not_isolated_result.append(peaks[niche].mean(axis=0).astype(int))
-
-    return peaks[isolated], np.asarray(not_isolated_result)
-
-
-path = "./data_compressed/"
+path = "./data_compressed3/"
 pth = os.listdir(path)
 for i in pth:
     #if i == "4037": # 한개만 할 때
@@ -129,4 +105,4 @@ for i in pth:
             vpds, num_dataset = get_players_vpds(path + i +'/')
             vpds_tile = (vpds / TILE_SIZE).astype(int)
             channel_vpds = mapping_vpd_into_channel(vpds_tile, num_dataset=1)
-            np.save(path + i +'/' + "0_vpds_label_masked.npy", channel_vpds)
+            np.save(path + i +'/' + "vpds_label_masked.npy", channel_vpds)

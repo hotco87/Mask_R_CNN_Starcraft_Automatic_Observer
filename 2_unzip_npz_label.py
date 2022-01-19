@@ -14,7 +14,7 @@ def load_all_data(path):
     label_path = path.replace(replay_name + "/", '')
 
     data = np.load(data_path + replay_name + ".rep.channels_compressed.npz" )["data"]
-    label = label_path + replay_name + '/' + "0_vpds_label_masked.npy"
+    label = label_path + replay_name + '/' + "vpds_label_masked.npy"
     if os.path.exists(label):
         # os.mkdir("./data/" + replay_name)
 
@@ -36,9 +36,11 @@ def load_all_data(path):
     len_min = min(data.shape[0], labels.shape[0])
     # len = labels.shape[0]
 
+    os.makedirs("./test_data3/" + replay_name, exist_ok=True)
     for i in range(0, len_min):
         data_single = np.array([[data[i]],[labels[i]]])
         np.save("./data/" + replay_name + '/' +str(i) + ".npy", data_single)
+        np.save("./test_data3/" + replay_name + '/' + str(i) + ".npy", data_single)
 
     results = {
         "data": data[:len_min,:],
@@ -47,10 +49,10 @@ def load_all_data(path):
 
     return results
 
-path = "./data_compressed/"
+path = "./data_compressed3/"
 pth = os.listdir(path)
 for i in pth:
-    if i == "4037": # 한개만 할 때
+    # if i == "4037": # 한 개만 할 때
         if os.path.isdir(path + i):
             load_all_data(path + i +'/')
             print(f"Loaded {i}")

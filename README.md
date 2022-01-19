@@ -31,10 +31,10 @@
    
 5) 4_evaluated.ipynb  
    : 테스트 리플레이 데이터에 대해 vpx와 vpy를 만듦.  
-   : test_data 폴더에서 작용함. ex) test_data, test_data2, test_data3 .. 
-   
-6) 5_generate_vpd.py
-   : 5)에서 만든 vpx와 vpy를 이용하여 vpd를 만듦
+   : test_data 폴더에 테스트 리플레이를 넣으면 됨. ex) test_data, test_data2, test_data3 .. 
+   : 생성된 vpx와 vpy를 이용하여 starcraft에서 확인해보기 위해 vpd를 만듦
+
+
 
 
 ### TODO

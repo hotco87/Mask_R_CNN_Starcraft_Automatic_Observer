@@ -102,15 +102,20 @@ class PennFudanDataset(object):
 
     def preprocessing(self, data):
         #0 ground 1 air 2 building 3 spell 4 ground 5 air 6 building 7 spell 8 resource 9 vision 10 terrain
-        temp = np.zeros([self.window_size, 7, data.shape[2],data.shape[2]])
+        temp = np.zeros([self.window_size, 9, data.shape[2],data.shape[2]])
 
         temp[:,0] = data[0]
         temp[:,1] = data[1]
         temp[:,2] = data[2]
         temp[:,3] = data[4]
-        temp[:,4] = data[5]
-        temp[:,5] = data[6]
-        temp[:,6] = data[9]
+
+        temp[:,4] = data[6]
+        temp[:,5] = data[7]
+        temp[:,6] = data[8]
+        temp[:,7] = data[10]
+
+        temp[:,8] = data[13]
+
 
         data = temp
         data = data.reshape(self.window_size*data.shape[1],data.shape[2],-1)
@@ -125,7 +130,7 @@ import torch.nn as nn
 def get_model_instance_segmentation(num_classes):
     # load an instance segmentation model pre-trained pre-trained on COCO
     model = torchvision.models.detection.maskrcnn_resnet50_fpn(pretrained=True)
-    model.backbone.body.conv1 = nn.Conv2d(7, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+    model.backbone.body.conv1 = nn.Conv2d(9, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
 
     # get number of input features for the classifier
     in_features = model.roi_heads.box_predictor.cls_score.in_features

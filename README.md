@@ -17,7 +17,8 @@
 
 1) 0_generate_compressed_npz.ipynb  
     : 딥러닝 입력으로 들어갈 인풋 만들기  
-    : 사전준비 사항의 [replay_file].raw 와 [replay_file].rep.vpd 를 이용하여 딥러닝의 인풋으로 들어갈 채널 생성  
+    : 사전준비 사항의 [replay_file].raw 와 [replay_file].rep.vpd 를 이용하여 딥러닝의 인풋으로 들어갈 채널 생성 
+    : 'C:/TM/starcraft/bwapi-data/write/raw/' <- 이 폴더에 하나의 리플레이당 (12.rep.raw, 12.rep.terrain, 12.rep.vision), 12.rep.vpd 가 있으면 됨.
    
 2) 1_replaydata_vpds_to_label_masked.py  
    : [replay_file].rep.vpd 를 이용하여 1x128x128 masked label 를 만드는 소스코드  

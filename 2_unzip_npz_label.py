@@ -52,7 +52,7 @@ def load_all_data(path):
 path = "./data_compressed3/"
 pth = os.listdir(path)
 for i in pth:
-    # if i == "4037": # 한 개만 할 때
+    # if i == "4037": # 한 개만 할 때  # 저장할 때 training data와 test data를 구분해야 함.
         if os.path.isdir(path + i):
             load_all_data(path + i +'/')
             print(f"Loaded {i}")

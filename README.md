@@ -7,7 +7,7 @@
    (ChaosLaucher => RELEASE 선택 => config => ai => bwapi-data/AI/RAWdataExtractor.dll)  
    (생성위치 : C:\TM\starcraft\bwapi-data\write\)  
 
-#### 3) 휴먼 데이터 수집      
+#### 3) 휴먼 데이터 수집  
    ==> [replay_file].rep.vpd 생성   
       (ChaosLaucher => "ai = bwapi-data/AI/ObserverModule.dll")  
       (생성위치 : C:\TM\starcraft\bwapi-data\write\)  
@@ -38,5 +38,5 @@
 
 
 ### TODO
-1) 여러 명의 리플레이 데이터에 대한 하나의 label을 생성
+1) 여러 명의 리플레이 데이터에 대한 하나의 label을 생성  
   : 10_multi_replay_generate_vpds_label_masked.ipynb <-- 여기에서 작업중

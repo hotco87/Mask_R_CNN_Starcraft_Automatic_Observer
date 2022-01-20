@@ -20,7 +20,8 @@
    
 #### 3_main.py  
     : #### https://pytorch.org/tutorials/intermediate/torchvision_tutorial.html    
-      => 먼저 이 코드가 돌아가게끔 환경세팅을 잡아줘야함.
+      => 먼저 이 코드가 돌아가게끔 환경세팅을 잡아줘야함. (torchvision 설치 등)
+      => anaconda3\envs\starcraft\Lib\site-packages\torchvision\models\detection\transform.py 에서 image = self.normalize(image) <- 이부분 주석처리
     : Masked R CNN 코드 실행  
    
 #### 4_evaluated.ipynb  

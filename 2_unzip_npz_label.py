@@ -6,10 +6,10 @@ from torch.utils.data import Dataset, DataLoader
 import pandas as pd
 from PIL import Image
 
-def load_all_data(path):
+def load_all_data(path, type = "training"):
 
     replay_name = path.split('/')[-2]
-    os.makedirs("./data/" + replay_name, exist_ok=True)
+
     data_path = path
     label_path = path.replace(replay_name + "/", '')
 
@@ -17,7 +17,6 @@ def load_all_data(path):
     label = label_path + replay_name + '/' + "vpds_label_masked.npy"
     if os.path.exists(label):
         # os.mkdir("./data/" + replay_name)
-
         # np.save("./data2/" + replay_name +"/" + replay_name +".npy", data)
         labels = np.load(label)
     else:
@@ -32,15 +31,18 @@ def load_all_data(path):
         temp.append(labels[i])
 
     labels = np.array(temp)
-
     len_min = min(data.shape[0], labels.shape[0])
     # len = labels.shape[0]
 
-    os.makedirs("./test_data3/" + replay_name, exist_ok=True)
+
     for i in range(0, len_min):
         data_single = np.array([[data[i]],[labels[i]]])
-        np.save("./data/" + replay_name + '/' +str(i) + ".npy", data_single)
-        np.save("./test_data3/" + replay_name + '/' + str(i) + ".npy", data_single)
+        if type == "training":
+            os.makedirs("./trainig_data/" + replay_name, exist_ok=True)
+            np.save("./trainig_data/" + replay_name + '/' +str(i) + ".npy", data_single)
+        if type == "testing":
+            os.makedirs("./testing_data/" + replay_name + "/" + replay_name, exist_ok=True)
+            np.save("./testing_data/" + replay_name + '/' + replay_name + '/' + str(i) + ".npy", data_single)
 
     results = {
         "data": data[:len_min,:],
@@ -51,8 +53,17 @@ def load_all_data(path):
 
 path = "./data_compressed3/"
 pth = os.listdir(path)
+training = ['36', '212', '438', '522', '1660']
+testing = ['6254', '4037', '1725']
+
+os.makedirs("./testing_data/", exist_ok=True)
+os.makedirs("./trainig_data/", exist_ok=True)
+
 for i in pth:
-    # if i == "4037": # 한 개만 할 때  # 저장할 때 training data와 test data를 구분해야 함.
-        if os.path.isdir(path + i):
-            load_all_data(path + i +'/')
+    if os.path.isdir(path + i):
+        if i in training: # 한 개만 할 때  # 저장할 때 training data와 test data를 구분해야 함.
+            load_all_data(path + i +'/', type = "training")
+            print(f"Loaded {i}")
+        if i in testing: # 한 개만 할 때  # 저장할 때 training data와 test data를 구분해야 함.
+            load_all_data(path + i +'/', type = "testing")
             print(f"Loaded {i}")

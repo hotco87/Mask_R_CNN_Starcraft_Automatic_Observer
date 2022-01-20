@@ -232,7 +232,7 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument("--log_save-dir", type=str, default=f"./saved_models/")
-    parser.add_argument("--load-dir", type=str, default=f"./data/")
+    parser.add_argument("--load-dir", type=str, default=f"./trainig_data/")
     parser.add_argument("--batch-size", type=int, default=64) #256
     parser.add_argument("--window-size", type=int, default=1)
     parser.add_argument("--learning-rate", type=float, default=0.0001)

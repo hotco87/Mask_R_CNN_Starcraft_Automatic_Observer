@@ -9,23 +9,23 @@
     : data_compressed3/[replay_file]/   <- 이 폴더에 npz, vpd 생성  
 
 #### 1_replaydata_vpds_to_label_masked.py  
-   : [replay_file].rep.vpd 를 이용하여 1x128x128 masked label 를 만드는 소스코드
-   : data_compressed3/[replay_file]/   <- 이 폴더에 정답 masked label 생성 (vpds_label_masked.npy)
+    : [replay_file].rep.vpd 를 이용하여 1x128x128 masked label 를 만드는 소스코드
+    : data_compressed3/[replay_file]/   <- 이 폴더에 정답 masked label 생성 (vpds_label_masked.npy)
       => 딥러닝의 아웃풋으로 사용됨  
 
 #### 2_unzip_npz_label.py  
-   : 1)의 input과 2)의 output 을 실제 딥러닝 input, ouput 으로 들어갈 수 있도록 변경  (training/testing 구분)
-   : training_data/[replay_file]/   <- 이 폴더에 ".npy" 파일들이 있으며 인풋과 아웃풋이 합쳐져 있음
-   : testing_data/[replay_file]/   <- 이 폴더에 ".npy" 파일들이 있으며 인풋과 아웃풋이 합쳐져 있음
+    : 1)의 input과 2)의 output 을 실제 딥러닝 input, ouput 으로 들어갈 수 있도록 변경  (training/testing 구분)
+    : training_data/[replay_file]/   <- 이 폴더에 ".npy" 파일들이 있으며 인풋과 아웃풋이 합쳐져 있음
+    : testing_data/[replay_file]/   <- 이 폴더에 ".npy" 파일들이 있으며 인풋과 아웃풋이 합쳐져 있음
    
 #### 3_main.py  
-   : #### https://pytorch.org/tutorials/intermediate/torchvision_tutorial.html    
+    : #### https://pytorch.org/tutorials/intermediate/torchvision_tutorial.html    
       => 먼저 이 코드가 돌아가게끔 환경세팅을 잡아줘야함.
-   : Masked R CNN 코드 실행  
+    : Masked R CNN 코드 실행  
    
 #### 4_evaluated.ipynb  
-   : (testing_data) 테스트 리플레이 데이터에 대해 vpx와 vpy를 만듦.
-   : 생성된 vpx와 vpy를 이용하여 starcraft에서 확인해보기 위해 vpd를 만듦
+    : (testing_data) 테스트 리플레이 데이터에 대해 vpx와 vpy를 만듦.
+    : 생성된 vpx와 vpy를 이용하여 starcraft에서 확인해보기 위해 vpd를 만듦
 
 # 사전준비 2
 

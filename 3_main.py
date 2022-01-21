@@ -19,8 +19,11 @@ import time
 
 def load_all_label(path):
     replay_name = path.split('/')[-2]
+    # print("replay_name:", replay_name)
     label_path = path.replace(replay_name + "/", '')
+    # print("label_path:", label_path)
     label_len = len(os.listdir(label_path + replay_name +"/"))
+    # print("label_len:", label_len)
     labels = np.array([])
     for i in range(0, label_len):
         labels = np.append(labels, np.load(label_path + replay_name +"/"+ str(i) + ".npy", allow_pickle=True)[1])
@@ -211,7 +214,7 @@ def main(args):
                                                    gamma=0.1)
 
     # let's train it for 10 epochs
-    num_epochs = 300
+    num_epochs = 50
     data_path_test = "./saved_models/"
     os.makedirs(data_path_test, exist_ok=True)
 
@@ -222,7 +225,7 @@ def main(args):
         lr_scheduler.step()
         # evaluate on the test dataset
         evaluate(model, data_loader_test, device=device)
-        if epoch % 10 == 0 :
+        if epoch % 5 == 0 :
             torch.save(model.state_dict(), os.path.join(data_path_test, f"model_{epoch}.pth"))
 
     print("That's it!")

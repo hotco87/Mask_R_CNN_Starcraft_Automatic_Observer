@@ -63,7 +63,7 @@ class PennFudanDataset(object):
         # load images and masks
         for i, start, end in self.seq_indexs:
             if idx >= start and idx < end:
-                real_idx = idx - start + 50*i
+                real_idx = idx - start + 50*(i+1)
 
                 data = np.load(self.dir_paths[i] + '/' + str(real_idx) + ".npy", allow_pickle=True)[0][0]    # (11, 128, 128)
                 masks = np.load(self.dir_paths[i] + '/' + str(real_idx) + ".npy", allow_pickle=True)[1][0]   #  (128, 128)

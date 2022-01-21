@@ -51,9 +51,10 @@ class PennFudanDataset(object):
         self.seq_indexs = []
         start = 0
         for i, seq in enumerate(self.label_sequences):
-            end = start + len(seq) - (self.window_size - 1)
+            end = start + len(seq) - (self.window_size - 1) - 50*(i+1)
             self.seq_indexs.append((i, start, end))
             start = end
+
 
     def __len__(self):
         return self.seq_indexs[-1][-1]
@@ -62,7 +63,7 @@ class PennFudanDataset(object):
         # load images and masks
         for i, start, end in self.seq_indexs:
             if idx >= start and idx < end:
-                real_idx = idx - start
+                real_idx = idx - start + 50*i
 
                 data = np.load(self.dir_paths[i] + '/' + str(real_idx) + ".npy", allow_pickle=True)[0][0]    # (11, 128, 128)
                 masks = np.load(self.dir_paths[i] + '/' + str(real_idx) + ".npy", allow_pickle=True)[1][0]   #  (128, 128)

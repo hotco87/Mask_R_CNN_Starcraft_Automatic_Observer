@@ -1,3 +1,7 @@
+### 1/21일 변경점
+    초반 8초 정도 트레이닝 셋에서 제외시킴 - 3_main.py (50~66 line)
+    ground 유닛에서 일꾼(worker) 제외 - 0_generate_compressed_npz.ipynb -> compressed npz 파일 변경 
+
 # 실행순서
 
 #### 0_generate_compressed_npz.ipynb  

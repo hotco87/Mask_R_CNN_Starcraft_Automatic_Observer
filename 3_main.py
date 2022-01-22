@@ -218,7 +218,7 @@ def main(args):
     num_epochs = 50
     data_path_test = "./saved_models/"
     os.makedirs(data_path_test, exist_ok=True)
-
+    # torch.load("./saved_models/model_0.pth")
     for epoch in range(num_epochs):
         # train for one epoch, printing every 10 iterations
         train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq=10)
@@ -226,8 +226,7 @@ def main(args):
         lr_scheduler.step()
         # evaluate on the test dataset
         evaluate(model, data_loader_test, device=device)
-        if epoch % 5 == 0 :
-            torch.save(model.state_dict(), os.path.join(data_path_test, f"model_{epoch}.pth"))
+        torch.save(model.state_dict(), os.path.join(data_path_test, f"model_{epoch}.pth"))
 
     print("That's it!")
 
@@ -236,6 +235,7 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument("--log_save-dir", type=str, default=f"./saved_models/")
+    parser.add_argument("--load-model", type=bool, default=False)
     parser.add_argument("--load-dir", type=str, default=f"./trainig_data/")
     parser.add_argument("--batch-size", type=int, default=64) #256
     parser.add_argument("--window-size", type=int, default=1)

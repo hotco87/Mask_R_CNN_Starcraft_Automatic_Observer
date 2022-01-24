@@ -215,7 +215,7 @@ def main(args):
                                                    gamma=0.1)
 
     # let's train it for 10 epochs
-    num_epochs = 50
+    num_epochs = 10
     data_path_test = "./saved_models/"
     os.makedirs(data_path_test, exist_ok=True)
     # torch.load("./saved_models/model_0.pth")

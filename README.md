@@ -2,7 +2,22 @@
     초반 50초 정도 트레이닝 셋에서 제외시킴 - 3_main.py (50~66 line)
     ground 유닛에서 일꾼(worker) 제외 - 0_generate_compressed_npz.ipynb -> compressed npz 파일 변경 
 
-# 실행순서
+### 2/2일 변경점
+    다섯 명의 정답 데이터로 Mask-RCNN
+
+
+# 실행순서 1  - 다섯명 리플레이 정답으로 처리하는 Mask RCNN
+
+#### 0_generate_compressed_npz_five_data.ipynb 실행
+    : Mask_R_CNN_Starcraft_Automatic_Observer 폴더에 labels 만들기
+    : https://drive.google.com/file/d/1MxKsrA36Di9d2YGMyBYdQHW1QvrC_8mB/view?usp=sharing
+    : labels에 위 링크 폴더 넣기    
+#### 1_replaydata_vpds_to_label_masked_five_data.py
+#### 3_main_five_data.py
+#### 4_evaluation_five_data.ipynb
+
+
+# 실행순서 2  - 호택 리플레이로만
 
 #### 0_generate_compressed_npz.ipynb  
     : 딥러닝 입력으로 들어갈 인풋 만들기  

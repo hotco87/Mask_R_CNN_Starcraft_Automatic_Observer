@@ -44,14 +44,18 @@ def eval(labels_arr, min_length):
     print("eval done")
     return total_intersection, is_intersect
 
-label_name = ["rcnn", "pdh", "jht",  "yws",  "bcm", "cyh"] #aiide, rcnn, bc
+label_name = ["saved_xy/hotaek", "pdh", "jht",  "yws",  "bcm", "cyh"] #aiide, rcnn, bc
+# label_name = ["saved_xy", "pdh", "jht",  "yws",  "bcm", "cyh"] #aiide, rcnn, bc
 # label_name = ["rcnn",  "cyh"] #aiide, rcnn, bc
 length = 0
 min_length = np.inf
 labels_arr = []
 
 for i in range (0,6):
-    label_path = "./labels/" + label_name[i] +'/'
+    if i ==0 :
+        label_path = label_name[i] + '/'
+    else:
+        label_path = "./labels/" + label_name[i] + '/'
     label, length = load(label_path)
     labels_arr.append(label)
     min_length = min(length, min_length)

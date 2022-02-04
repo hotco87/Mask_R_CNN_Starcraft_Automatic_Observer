@@ -4,10 +4,10 @@ from shapely.geometry import box
 import os
 os.makedirs("labels",exist_ok=True)
 
-TEST_NAME = "6254"
-def load(label_path):
+
+def load(label_path,a,TEST_NAME):
     viewport_data = pd.read_csv(label_path + TEST_NAME + ".rep.vpd", index_col=None)
-    terminal_frame = int(viewport_data['frame'][-1:].item()/3)
+    terminal_frame = int(viewport_data['frame'][-1:].item()/3*a)
     viewport_data = viewport_data.set_index('frame')
     viewport_data = viewport_data.reindex(range(terminal_frame))
     viewport_data = viewport_data.fillna(method='ffill')
@@ -44,21 +44,36 @@ def eval(labels_arr, min_length):
     print("eval done")
     return total_intersection, is_intersect
 
-label_name = ["saved_xy/hotaek", "pdh", "jht",  "yws",  "bcm", "cyh"] #aiide, rcnn, bc
-# label_name = ["saved_xy", "pdh", "jht",  "yws",  "bcm", "cyh"] #aiide, rcnn, bc
-# label_name = ["rcnn",  "cyh"] #aiide, rcnn, bc
-length = 0
-min_length = np.inf
-labels_arr = []
 
-for i in range (0,6):
-    if i ==0 :
-        label_path = label_name[i] + '/'
-    else:
-        label_path = "./labels/" + label_name[i] + '/'
-    label, length = load(label_path)
-    labels_arr.append(label)
-    min_length = min(length, min_length)
-total_intersection, is_intersect = eval(labels_arr,min_length)
-#print("intersect: ", total_intersection, "is_intersect: ", is_intersect)
-print("total_intersection percent: ", np.mean(total_intersection), "total_is_intersect_percent: ", np.mean(is_intersect))
+TEST_NAME = "212"
+TEST_NAME = "438"
+TEST_NAME = "522"
+TEST_NAME = "1660"
+TEST_NAME = "6254"
+TEST_NAME = "36"
+
+print("replay_name: ",TEST_NAME)
+
+for j in range(1,4,1):
+    label_name = ["saved_xy", "pdh", "jht",  "yws",  "bcm", "cyh"] #aiide, rcnn, bc
+    # label_name = ["cyh", "pdh", "jht", "yws", "bcm" ]  # aiide, rcnn, bc
+    # label_name = ["saved_xy/old", "jht"] #aiide, rcnn, bc
+    # label_name = ["saved_xy/hotaek", "pdh", "jht",  "yws",  "bcm", "cyh"] #aiide, rcnn, bc
+    # label_name = ["rcnn",  "cyh"] #aiide, rcnn, bc
+    length = 0
+    min_length = np.inf
+    labels_arr = []
+
+    for i in range (0,len(label_name)):
+        if i == -1 :
+            label_path = label_name[i] + '/'
+        else:
+            label_path = "./labels/" + label_name[i] + '/'
+        label, length = load(label_path, j,TEST_NAME)
+        labels_arr.append(label)
+        min_length = min(length, min_length)
+    print("min_length:", min_length)
+    total_intersection, is_intersect = eval(labels_arr,min_length)
+    # print("intersect: ", total_intersection, "is_intersect: ", is_intersect)
+    print(j,"/3  total_intersection percent: ", np.round(np.mean(total_intersection),3), "total_is_intersect_percent: ", np.round(np.mean(is_intersect),3))
+    # print(j, "/3  total_intersection percent: ", np.round(np.mean(total_intersection), 3), ', ',np.round(np.mean(is_intersect), 3))

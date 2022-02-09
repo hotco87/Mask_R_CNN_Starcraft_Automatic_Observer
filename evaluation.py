@@ -27,11 +27,17 @@ def eval(labels_arr, min_length):
     is_intersect = []
     for i in range (0,min_length):
         total_tiles = np.zeros((width, height))
-        for labels in labels_arr[1:]:
-            labels = labels[:min_length]
-            x = int(np.round(labels['vpx'][i]/max_x*(width-x_len)))
-            y = int(np.round(labels['vpy'][i]/max_y*(height-y_len)))
-            total_tiles[x:x+x_len, y:y+y_len] =total_tiles[x:x+x_len, y:y+y_len]+1
+        for idx, labels in enumerate(labels_arr[1:]):
+            if idx == 0 :
+                labels = labels[:min_length]
+                x = int(np.round(labels['vpx'][i]/max_x*(width-x_len)))
+                y = int(np.round(labels['vpy'][i]/max_y*(height-y_len)))
+                total_tiles[x:x+x_len, y:y+y_len] =total_tiles[x:x+x_len, y:y+y_len]+1
+            else :
+                labels = labels[1200:min_length+1200]
+                x = int(np.round(labels['vpx'][i+1200]/max_x*(width-x_len)))
+                y = int(np.round(labels['vpy'][i+1200]/max_y*(height-y_len)))
+                total_tiles[x:x+x_len, y:y+y_len] =total_tiles[x:x+x_len, y:y+y_len]+1
             #total_tiles[labels['vpx'][i]:labels['vpx'][i]+x_len][labels['vpy'][i]:labels['vpy'][i]-y_len] =+1
         pred_x = int(np.round(labels_arr[0]['vpx'][i]/max_x*(width-x_len)))
         pred_y = int(np.round(labels_arr[0]['vpy'][i]/max_y*(height-y_len)))
@@ -51,11 +57,12 @@ TEST_NAME = "522"
 TEST_NAME = "1660"
 TEST_NAME = "6254"
 TEST_NAME = "36"
+TEST_NAME = "6254"
 
 print("replay_name: ",TEST_NAME)
 
-for j in range(1,4,1):
-    label_name = ["saved_xy", "pdh", "jht",  "yws",  "bcm", "cyh"] #aiide, rcnn, bc
+for j in range(3,4,1):
+    label_name = ["saved_xy/2_6_five_masked_new", "pdh", "jht",  "yws",  "bcm", "cyh"] #aiide, rcnn, bc
     # label_name = ["cyh", "pdh", "jht", "yws", "bcm" ]  # aiide, rcnn, bc
     # label_name = ["saved_xy/old", "jht"] #aiide, rcnn, bc
     # label_name = ["saved_xy/hotaek", "pdh", "jht",  "yws",  "bcm", "cyh"] #aiide, rcnn, bc
@@ -65,15 +72,19 @@ for j in range(1,4,1):
     labels_arr = []
 
     for i in range (0,len(label_name)):
-        if i == -1 :
+        if i == 0 :
             label_path = label_name[i] + '/'
+            label, length = load(label_path, j, TEST_NAME)
         else:
             label_path = "./labels/" + label_name[i] + '/'
-        label, length = load(label_path, j,TEST_NAME)
+            label, length = load(label_path, j, TEST_NAME)
+            length = length - 1200
+        print("min_length:",i,  length)
         labels_arr.append(label)
         min_length = min(length, min_length)
+
     print("min_length:", min_length)
-    total_intersection, is_intersect = eval(labels_arr,min_length)
+    total_intersection, is_intersect = eval(labels_arr, min_length)
     # print("intersect: ", total_intersection, "is_intersect: ", is_intersect)
     print(j,"/3  total_intersection percent: ", np.round(np.mean(total_intersection),3), "total_is_intersect_percent: ", np.round(np.mean(is_intersect),3))
     # print(j, "/3  total_intersection percent: ", np.round(np.mean(total_intersection), 3), ', ',np.round(np.mean(is_intersect), 3))

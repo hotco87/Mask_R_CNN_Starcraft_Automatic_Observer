@@ -51,7 +51,7 @@ class PennFudanDataset(object):
         self.seq_indexs = []
         start = 0
         for i, seq in enumerate(self.label_sequences):
-            end = start + len(seq) - (self.window_size - 1) - 150*(i+1)
+            end = start + len(seq) - (self.window_size - 1) - 150 # *(i+1)
             self.seq_indexs.append((i, start, end))
             start = end
 
@@ -65,13 +65,16 @@ class PennFudanDataset(object):
             if idx >= start and idx < end:
                 real_idx = idx - start + 150 # *(i+1)
 
-                data = np.load(self.dir_paths[i] + '/' + str(real_idx) + ".npy", allow_pickle=True)[0][0]    # (11, 128, 128)
-                masks1 = np.load(self.dir_paths[i] + '/' + str(real_idx) + ".npy", allow_pickle=True)[1][0]   #  (128, 128)
-                masks2 = np.load(self.dir_paths[i] + '/' + str(real_idx) + ".npy", allow_pickle=True)[2][0]  # (128, 128)
-                masks3 = np.load(self.dir_paths[i] + '/' + str(real_idx) + ".npy", allow_pickle=True)[3][0]  # (128, 128)
-                masks4 = np.load(self.dir_paths[i] + '/' + str(real_idx) + ".npy", allow_pickle=True)[4][0]  # (128, 128)
-                masks5 = np.load(self.dir_paths[i] + '/' + str(real_idx) + ".npy", allow_pickle=True)[5][0]  # (128, 128)
-                masks = np.stack((masks1, masks2,masks3,masks4,masks5))
+                entire_data = np.load(self.dir_paths[i] + '/' + str(real_idx) + ".npy", allow_pickle=True)
+                data = entire_data[0][0]
+
+                tmp = []
+                for i in entire_data:
+                    if i != 0:
+                        tmp.append(i[0])
+
+                masks = np.stack(tmp)
+                # masks = np.stack((masks1, masks2,masks3,masks4,masks5))
 
                 break
 
@@ -240,7 +243,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument("--log_save-dir", type=str, default=f"./saved_models/")
     parser.add_argument("--load-model", type=bool, default=False)
-    parser.add_argument("--load-dir", type=str, default=f"./trainig_data2/")
+    parser.add_argument("--load-dir", type=str, default=f"./trainig_data_five_several/")
     parser.add_argument("--batch-size", type=int, default=64) #256
     parser.add_argument("--window-size", type=int, default=1)
     parser.add_argument("--learning-rate", type=float, default=0.0001)

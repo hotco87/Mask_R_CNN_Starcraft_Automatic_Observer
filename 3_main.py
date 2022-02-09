@@ -51,7 +51,7 @@ class PennFudanDataset(object):
         self.seq_indexs = []
         start = 0
         for i, seq in enumerate(self.label_sequences):
-            end = start + len(seq) - (self.window_size - 1) - 150*(i+1)
+            end = start + len(seq) - (self.window_size - 1) - 150 # *(i+1)
             self.seq_indexs.append((i, start, end))
             start = end
 
@@ -215,7 +215,7 @@ def main(args):
                                                    gamma=0.1)
 
     # let's train it for 10 epochs
-    num_epochs = 10
+    num_epochs = 30
     data_path_test = "./saved_models/"
     os.makedirs(data_path_test, exist_ok=True)
     # torch.load("./saved_models/model_0.pth")
@@ -236,7 +236,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument("--log_save-dir", type=str, default=f"./saved_models/")
     parser.add_argument("--load-model", type=bool, default=False)
-    parser.add_argument("--load-dir", type=str, default=f"./trainig_data/")
+    parser.add_argument("--load-dir", type=str, default=f"./trainig_data_five_one/")
     parser.add_argument("--batch-size", type=int, default=64) #256
     parser.add_argument("--window-size", type=int, default=1)
     parser.add_argument("--learning-rate", type=float, default=0.0001)
